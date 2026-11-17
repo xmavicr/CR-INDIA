@@ -116,5 +116,30 @@ function likePost(button){
  }
 }
 </script>
+ <div class="post-actions">
+  <button onclick="likePost(this)">❤️ Like <span>0</span></button>
+  <button onclick="commentPost()">💬 Comment</button>
+  <button onclick="sharePost()">↗️ Share</button>
+</div>
+
+<script>
+function likePost(button) {
+  const count = button.querySelector("span");
+  const liked = button.classList.toggle("liked");
+  count.textContent = Number(count.textContent) + (liked ? 1 : -1);
+}
+
+function commentPost() {
+  const comment = prompt("Write your comment:");
+  if (comment && comment.trim()) {
+    alert("Comment added: " + comment);
+  }
+}
+
+function sharePost() {
+  navigator.clipboard.writeText(window.location.href);
+  alert("CR~INDIA link copied!");
+}
+</script>
 </body>
 </html>

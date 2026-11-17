@@ -52,7 +52,8 @@ nav button{background:transparent;color:#172033;padding:8px;font-size:12px}
 <p class="small">A place to connect with people.</p>
 <div class="post-actions">
 <button onclick="likePost(this)">♡ Like</button>
-<button onclick="alert('Comments feature coming soon!')">💬 Comment</button>
+<button onclick="commentPost()">💬 Comment</button>
+<button onclick="sharePost()">↗️ Share</button>
 </div>
 </article>
 </div>
@@ -139,6 +140,27 @@ function commentPost() {
 function sharePost() {
   navigator.clipboard.writeText(window.location.href);
   alert("CR~INDIA link copied!");
+}
+</script>
+ <script>
+function commentPost() {
+  const comment = prompt("Write your comment:");
+  if (comment && comment.trim()) {
+    alert("Comment added: " + comment);
+  }
+}
+
+function sharePost() {
+  if (navigator.share) {
+    navigator.share({
+      title: "CR~INDIA",
+      text: "Welcome to Our Indian Social Community!",
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Link copied!");
+  }
 }
 </script>
 </body>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CR~INDIA</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial}
+body{background:#10182b;color:white;min-height:100vh}
+header{text-align:center;padding:35px 15px}
+.logo{font-size:40px;font-weight:bold}
+.logo span{color:#ff9933}
+header p{color:#cbd5e1;margin-top:10px}
+.card{background:#1b2740;padding:28px;border-radius:18px;width:90%;max-width:400px;margin:20px auto}
+h2{text-align:center;margin-bottom:12px}
+.sub{text-align:center;color:#b9c4d8;margin-bottom:20px}
+input{width:100%;padding:14px;margin:9px 0;border:1px solid #45536b;border-radius:9px;background:#10182b;color:white}
+button{width:100%;padding:14px;margin-top:15px;background:linear-gradient(90deg,#ff9933,#138808);color:white;border:0;border-radius:9px;font-size:16px;font-weight:bold;cursor:pointer}
+.switch{text-align:center;margin-top:20px;color:#cbd5e1;font-size:14px}
+a{color:#ffad52;cursor:pointer}
+.hidden{display:none}
+footer{text-align:center;color:#9ca3af;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">CR<span>~</span>INDIA 🇮🇳</div>
+<p>Connect India. Connect People.</p>
+</header>
+
+<div class="card">
+<section id="login">
+<h2>Welcome Back!</h2>
+<p class="sub">Login to CR~INDIA</p>
+<form onsubmit="loginUser(event)">
+<input type="email" placeholder="Email Address" required>
+<input type="password" placeholder="Password" required>
+<button type="submit">Login</button>
+</form>
+<p class="switch">New here? <a onclick="showSignup()">Create Account</a></p>
+</section>
+
+<section id="signup" class="hidden">
+<h2>Join CR~INDIA</h2>
+<p class="sub">Create your account</p>
+<form onsubmit="signupUser(event)">
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email Address" required>
+<input type="password" placeholder="Password (8 characters minimum)" minlength="8" required>
+<button type="submit">Sign Up</button>
+</form>
+<p class="switch">Already registered? <a onclick="showLogin()">Login</a></p>
+</section>
+
+<section id="welcome" class="hidden">
+<h2>Welcome to CR~INDIA! 🇮🇳</h2>
+<p class="sub">Your social journey starts here.</p>
+<button onclick="showLogin()">Logout</button>
+</section>
+</div>
+
+<footer>Made with ❤️ in India<br><br>© 2026 CR~INDIA</footer>
+
+<script>
+function showSignup(){
+document.getElementById("login").classList.add("hidden");
+document.getElementById("signup").classList.remove("hidden");
+}
+function showLogin(){
+document.getElementById("signup").classList.add("hidden");
+document.getElementById("welcome").classList.add("hidden");
+document.getElementById("login").classList.remove("hidden");
+}
+function loginUser(e){
+e.preventDefault();
+alert("Demo only: Real login is not connected yet.");
+}
+function signupUser(e){
+e.preventDefault();
+alert("Demo only: Account creation is not connected yet.");
+}
+</script>
+</body>
+</html>

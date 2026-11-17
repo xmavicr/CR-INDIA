@@ -5,48 +5,116 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CR~INDIA</title>
 <style>
-body{margin:0;background:#f2f4f8;font-family:Arial}
-header{background:#101b35;color:white;padding:20px;text-align:center}
-header h1{margin:0;color:white}
-header span{color:#ff9933}
-main{max-width:550px;margin:20px auto;padding:12px}
-.stories,.post{background:white;padding:16px;border-radius:14px;margin-bottom:16px}
-.stories{display:flex;justify-content:space-around;gap:12px}
-.story{text-align:center;font-size:13px}
-.circle{width:48px;height:48px;border-radius:50%;background:#e8edf8;border:3px solid #ff9933;display:grid;place-items:center;margin:auto auto 6px;font-size:22px}
-.post img{width:100%;border-radius:10px;margin-top:12px}
-button{padding:10px 14px;border:0;border-radius:20px;background:#e9eef8;margin:5px;cursor:pointer}
-nav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:15px 0}
-nav button{background:white}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f4f8;color:#172033;font-family:Arial,sans-serif}
+header{background:#101d36;color:white;padding:18px;text-align:center}
+header h2{margin:0;color:#ff9933}
+header p{margin:6px 0 0;font-size:12px;color:#ddd}
+main{max-width:600px;margin:auto;padding:14px}
+.card{background:white;padding:16px;border-radius:14px;margin-bottom:14px;box-shadow:0 2px 10px #00000010}
+h3{margin-top:0}
+textarea{width:100%;min-height:85px;border:1px solid #ddd;border-radius:10px;padding:12px;font:inherit;resize:vertical}
+input[type=file]{width:100%;margin:12px 0}
+button{border:0;border-radius:9px;padding:11px 15px;background:#172b50;color:white;font-weight:bold;cursor:pointer}
+.share{background:#13834b;width:100%}
+.post img{width:100%;border-radius:10px;margin-top:10px}
+.post-actions{display:flex;gap:10px;margin-top:12px}
+.post-actions button{background:#edf1f8;color:#172033}
+nav{position:sticky;bottom:0;background:white;display:flex;justify-content:space-around;padding:13px 4px;border-top:1px solid #ddd}
+nav button{background:transparent;color:#172033;padding:8px;font-size:12px}
+.small{color:#687386;font-size:12px}
 </style>
 </head>
 <body>
 <header>
-<h1>CR<span>~</span>INDIA 🇮🇳</h1>
+<h2>CR~INDIA 🇮🇳</h2>
 <p>Connect India. Connect People.</p>
 </header>
+
 <main>
-<section class="stories">
-<div class="story"><div class="circle">＋</div>Your Story</div>
-<div class="story"><div class="circle">👨</div>Rahul</div>
-<div class="story"><div class="circle">👩</div>Priya</div>
-<div class="story"><div class="circle">🧑</div>Arjun</div>
+<section class="card">
+<h3>➕ Create a Post</h3>
+<textarea id="postText" placeholder="What's happening in India?"></textarea>
+<input type="file" id="postImage" accept="image/*">
+<button class="share" onclick="createPost()">Share Post</button>
 </section>
-<article class="post">
-<b>CR~INDIA Official</b>
-<p>Discover the beauty of India! 🇮🇳</p>
-<img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800" alt="Taj Mahal">
-<button onclick="this.innerHTML='♥ Liked'">♡ Like</button>
-<button onclick="alert('Comments coming soon!')">💬 Comment</button>
-<button onclick="alert('Share coming soon!')">↗ Share</button>
+
+<section class="card">
+<h3>🌟 Stories</h3>
+<p>🟠 Your Story　 🔵 Friends　 🟢 Explore</p>
+</section>
+
+<h3>🏠 Home Feed</h3>
+<div id="feed">
+<article class="card post">
+<strong>CR~INDIA 🇮🇳</strong>
+<p>Welcome to our Indian social community!</p>
+<p class="small">A place to connect with people.</p>
+<div class="post-actions">
+<button onclick="likePost(this)">♡ Like</button>
+<button onclick="alert('Comments feature coming soon!')">💬 Comment</button>
+</div>
 </article>
+</div>
 </main>
+
 <nav>
-<button>🏠 Home</button>
-<button>🔍 Explore</button>
-<button>🎬 Reels</button>
-<button>💬 Chat</button>
-<button>👤 Profile</button>
+<button onclick="window.scrollTo(0,0)">🏠 Home</button>
+<button onclick="document.getElementById('postText').focus()">➕ Create</button>
+<button onclick="alert('Explore coming soon!')">🔍 Explore</button>
+<button onclick="alert('Chat coming soon!')">💬 Chat</button>
+<button onclick="alert('Profile coming soon!')">👤 Profile</button>
 </nav>
+
+<script>
+function createPost(){
+ const text=document.getElementById('postText').value.trim();
+ const file=document.getElementById('postImage').files[0];
+ if(!text && !file){
+  alert('Please write something or choose a photo.');
+  return;
+ }
+ const post=document.createElement('article');
+ post.className='card post';
+ const heading=document.createElement('strong');
+ heading.textContent='You 🇮🇳';
+ post.appendChild(heading);
+
+ if(text){
+  const paragraph=document.createElement('p');
+  paragraph.textContent=text;
+  post.appendChild(paragraph);
+ }
+
+ if(file){
+  const image=document.createElement('img');
+  image.src=URL.createObjectURL(file);
+  image.alt='Your post image';
+  post.appendChild(image);
+ }
+
+ const actions=document.createElement('div');
+ actions.className='post-actions';
+ const like=document.createElement('button');
+ like.textContent='♡ Like';
+ like.onclick=function(){likePost(like)};
+ const comment=document.createElement('button');
+ comment.textContent='💬 Comment';
+ comment.onclick=function(){alert('Comments feature coming soon!')};
+ actions.append(like,comment);
+ post.appendChild(actions);
+
+ document.getElementById('feed').prepend(post);
+ document.getElementById('postText').value='';
+ document.getElementById('postImage').value='';
+}
+function likePost(button){
+ if(button.textContent.includes('Liked')){
+  button.textContent='♡ Like';
+ }else{
+  button.textContent='♥ Liked';
+ }
+}
+</script>
 </body>
 </html>

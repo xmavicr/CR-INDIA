@@ -46,7 +46,20 @@ box-shadow:0 0 12px #a020f055;
 .share{background:#13834b;width:100%}
 .post img{width:100%;border-radius:10px;margin-top:10px}
 .post-actions{display:flex;gap:10px;margin-top:12px}
-.post-actions button{
+.post-actions button
+ .comments-list{
+margin-top:12px;
+padding:10px;
+background:#160d27;
+border:1px solid #8735d8;
+border-radius:12px;
+color:#f5edff;
+}
+
+.comments-list p{
+padding:8px;
+border-bottom:1px solid #49216d;
+}{
 background:linear-gradient(135deg,#6500a8,#a020f0);
 color:white;
 border:1px solid #c77dff;
@@ -178,10 +191,24 @@ function likePost(button) {
   count.textContent = Number(count.textContent) + (liked ? 1 : -1);
 }
 
+ count.textContent = Number(count.textContent) + (liked ? 1 : -1);
+}
 function commentPost() {
   const comment = prompt("Write your comment:");
+
   if (comment && comment.trim()) {
-    alert("Comment added: " + comment);
+    const post = document.querySelector(".post");
+    let comments = post.querySelector(".comments-list");
+
+    if (!comments) {
+      comments = document.createElement("div");
+      comments.className = "comments-list";
+      post.appendChild(comments);
+    }
+
+    const item = document.createElement("p");
+    item.textContent = "💬 " + comment.trim();
+    comments.appendChild(item);
   }
 }
 

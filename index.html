@@ -263,7 +263,31 @@ document.addEventListener("submit", function(e) {
 
     post.appendChild(commentArea);
   }
+function commentPost() {
+  const comment = prompt("Write your comment:");
 
+  if (comment && comment.trim()) {
+    const post = document.querySelector(".post");
+
+    if (!post) {
+      alert("Post not found!");
+      return;
+    }
+
+    let comments = post.querySelector(".comments-list");
+
+    if (!comments) {
+      comments = document.createElement("div");
+      comments.className = "comments-list";
+      post.appendChild(comments);
+    }
+
+    const newComment = document.createElement("p");
+    newComment.textContent = "💬 " + comment.trim();
+
+    comments.appendChild(newComment);
+  }
+}
   const newComment = document.createElement("div");
   newComment.style.cssText =
     "padding:10px;margin-top:8px;background:#292044;border-radius:10px;color:white;";

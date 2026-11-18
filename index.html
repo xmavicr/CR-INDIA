@@ -180,7 +180,7 @@ function likePost(button){
 </script>
  <div class="post-actions">
   <button onclick="likePost(this)">❤️ Like <span>0</span></button>
-  <button onclick="commentPost()">💬 Comment</button>
+  <button onclick="commentPost(this)">💬 Comment</button>
   <button onclick="sharePost()">↗️ Share</button>
 </div>
 
@@ -197,7 +197,9 @@ function commentPost(button) {
   const comment = prompt("Write your comment:");
 
   if (comment && comment.trim()) {
-    const post = button ? button.closest(".post") : document.querySelector(".post");
+    const post = button
+      ? button.closest(".post")
+      : document.querySelector(".post");
 
     if (!post) return;
 
@@ -208,6 +210,13 @@ function commentPost(button) {
       comments.className = "comments-list";
       post.appendChild(comments);
     }
+
+    const commentElement = document.createElement("p");
+    commentElement.textContent = "💬 " + comment.trim();
+
+    comments.appendChild(commentElement);
+  }
+}
 
     const commentElement = document.createElement("p");
     commentElement.textContent = "💬 " + comment.trim();

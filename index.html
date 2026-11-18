@@ -239,4 +239,40 @@ function sharePost() {
 }
 </script>
 </body>
+ <script>
+document.addEventListener("submit", function(e) {
+  const form = e.target;
+
+  const input = form.querySelector("textarea, input[type='text']");
+  if (!input) return;
+
+  const comment = input.value.trim();
+  if (!comment) return;
+
+  e.preventDefault();
+
+  const post = form.closest(".post") || form.parentElement;
+
+  let commentArea = post.querySelector(".cr-comments");
+
+  if (!commentArea) {
+    commentArea = document.createElement("div");
+    commentArea.className = "cr-comments";
+    commentArea.style.cssText =
+      "margin-top:15px;padding:10px;color:white;";
+
+    post.appendChild(commentArea);
+  }
+
+  const newComment = document.createElement("div");
+  newComment.style.cssText =
+    "padding:10px;margin-top:8px;background:#292044;border-radius:10px;color:white;";
+
+  newComment.textContent = comment;
+
+  commentArea.appendChild(newComment);
+
+  input.value = "";
+});
+</script>
 </html>

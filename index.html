@@ -158,6 +158,23 @@ function createPost(){
   alert('Please write something or choose a photo.');
   return;
  }
+ function editProfile() {
+  const name = prompt("Enter your name:");
+  if (!name || !name.trim()) return;
+
+  const bio = prompt("Enter your bio:");
+
+  const profileName = document.querySelector(".profile-header h2");
+  const profileBio = document.querySelector(".profile-bio");
+
+  if (profileName) {
+    profileName.textContent = name.trim();
+  }
+
+  if (profileBio && bio !== null) {
+    profileBio.textContent = bio;
+  }
+}
  const post=document.createElement('article');
  post.className='card post';
  const heading=document.createElement('strong');

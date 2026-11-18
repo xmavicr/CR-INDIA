@@ -163,7 +163,11 @@ function createPost(){
  const comment=document.createElement('button');
  comment.textContent='💬 Comment';
  comment.onclick=function(){alert('Comments feature coming soon!')};
- actions.append(like,comment);
+ const share = document.createElement("button");
+share.textContent = "↗️ Share";
+share.onclick = function() { sharePost(); };
+
+actions.append(like, comment, share);
  post.appendChild(actions);
 
  document.getElementById('feed').prepend(post);

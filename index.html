@@ -113,7 +113,7 @@ box-shadow:none;
 <p class="small">A place to connect with people.</p>
 <div class="post-actions">
 <button onclick="likePost(this)">♡ Like</button>
-<button onclick="commentPost()">💬 Comment</button>
+<button onclick="commentPost(this)">💬 Comment</button>
 <button onclick="sharePost()">↗️ Share</button> 
 </div>
 </article>
@@ -193,11 +193,14 @@ function likePost(button) {
 
  count.textContent = Number(count.textContent) + (liked ? 1 : -1);
 }
-function commentPost() {
+function commentPost(button) {
   const comment = prompt("Write your comment:");
 
   if (comment && comment.trim()) {
-    const post = document.querySelector(".post");
+    const post = button ? button.closest(".post") : document.querySelector(".post");
+
+    if (!post) return;
+
     let comments = post.querySelector(".comments-list");
 
     if (!comments) {
@@ -205,6 +208,13 @@ function commentPost() {
       comments.className = "comments-list";
       post.appendChild(comments);
     }
+
+    const commentElement = document.createElement("p");
+    commentElement.textContent = "💬 " + comment.trim();
+
+    comments.appendChild(commentElement);
+  }
+}
 
     const item = document.createElement("p");
     item.textContent = "💬 " + comment.trim();

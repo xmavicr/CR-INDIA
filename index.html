@@ -342,6 +342,21 @@ function showPosts(){
 loadProfile();
 showPosts();
 </script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
+  const firebaseConfig = const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};
+
+  const app = initializeApp(firebaseConfig);
+
+  console.log("CR~INDIA Firebase Connected!");
+</script>
 </body>
 </html>

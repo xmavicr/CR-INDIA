@@ -138,7 +138,17 @@ nav button{
 
 <section class="card">
  <div class="profile-header">
-  <div class="profile-avatar">👤</div>
+  <div class="profile-avatar">
+  <img id="profilePhoto"
+       alt="Profile Photo"
+       style="display:none;width:75px;height:75px;border-radius:50%;object-fit:cover;">
+  <span id="defaultAvatar">👤</span>
+</div>
+
+<input type="file"
+       id="profilePhotoInput"
+       accept="image/*"
+       onchange="uploadProfilePhoto(event)">
   <div>
    <h2 id="profileName">CR~INDIA User</h2>
    <p id="profileUsername">@crindia_user</p>
@@ -195,7 +205,28 @@ nav button{
 
 <script>
 
-function editProfile(){
+function editProfile(){function uploadProfilePhoto(event) {
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const photo = document.getElementById("profilePhoto");
+    photo.src = e.target.result;
+    photo.style.display = "block";
+
+    document.getElementById("defaultAvatar").style.display = "none";
+  };
+
+  reader.readAsDataURL(file);
+}
  const name=prompt("Enter your name:");
  if(!name || !name.trim()) return;
 

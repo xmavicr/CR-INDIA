@@ -205,9 +205,8 @@ nav button{
 
 <script>
 
-function editProfile(){function uploadProfilePhoto(event) {
+function editProfile(){function function uploadProfilePhoto(event) {
   const file = event.target.files[0];
-
   if (!file) return;
 
   if (!file.type.startsWith("image/")) {
@@ -215,6 +214,35 @@ function editProfile(){function uploadProfilePhoto(event) {
     return;
   }
 
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const imageData = e.target.result;
+
+    localStorage.setItem("crProfilePhoto", imageData);
+
+    showProfilePhoto(imageData);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function showProfilePhoto(imageData) {
+  const photo = document.getElementById("profilePhoto");
+
+  photo.src = imageData;
+  photo.style.display = "block";
+
+  document.getElementById("defaultAvatar").style.display = "none";
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+  const savedPhoto = localStorage.getItem("crProfilePhoto");
+
+  if (savedPhoto) {
+    showProfilePhoto(savedPhoto);
+  }
+});
   const reader = new FileReader();
 
   reader.onload = function(e) {

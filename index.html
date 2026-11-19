@@ -1,356 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CR~INDIA</title>
-
-<style>
-*{box-sizing:border-box}
-
-body{
- margin:0;
- background:linear-gradient(135deg,#080510,#160b2d);
- color:#fff;
- font-family:Arial,sans-serif;
-}
-
-header{
- background:linear-gradient(90deg,#25004d,#6900a8);
- padding:22px;
- text-align:center;
- box-shadow:0 0 20px #a020f0;
-}
-
-header h2{margin:0}
-header p{margin:6px 0 0;font-size:13px}
-
-main{max-width:600px;margin:auto;padding:14px}
-
-.card{
- background:#1e0f37;
- padding:16px;
- border-radius:16px;
- margin-bottom:14px;
- border:1px solid #8735d8;
-}
-
-button{
- border:0;
- border-radius:10px;
- padding:11px 15px;
- background:linear-gradient(135deg,#6500a8,#a020f0);
- color:white;
- font-weight:bold;
- cursor:pointer;
-}
-
-textarea,input{
- width:100%;
- padding:12px;
- margin:8px 0;
- border-radius:10px;
- border:1px solid #8735d8;
- background:#fff;
- color:#222;
- font:inherit;
-}
-
-textarea{min-height:85px}
-
-.profile-header{
- display:flex;
- align-items:center;
- gap:14px;
-}
-
-.profile-avatar{
- font-size:35px;
- background:#49216d;
- padding:12px;
- border-radius:50%;
-}
-
-.profile-stats{
- display:flex;
- justify-content:space-around;
- text-align:center;
- margin:20px 0;
-}
-
-.post img{
- width:100%;
- border-radius:10px;
- margin-top:10px;
-}
-
-.post-actions{
- display:flex;
- gap:8px;
- flex-wrap:wrap;
- margin-top:12px;
-}
-
-.post-actions button{flex:1}
-
-.share{width:100%}
-
-.comments-list{
- margin-top:12px;
- padding:10px;
- background:#160d27;
- border-radius:10px;
-}
-
-.comments-list p{
- padding:7px;
- border-bottom:1px solid #49216d;
-}
-
-nav{
- position:sticky;
- bottom:0;
- background:#10091d;
- display:flex;
- justify-content:space-around;
- padding:12px 3px;
- border-top:1px solid #8735d8;
-}
-
-nav button{
- background:transparent;
- padding:8px 4px;
- font-size:12px;
-}
-
-.small{font-size:12px;color:#c8b6d8}
-</style>
-</head>
-
-<body>
-
-<header>
-<h2>CR~INDIA 🇮🇳</h2>
-<p>Connect India. Connect People.</p>
-</header>
-
-<main>
-
-<section class="card">
- <div class="profile-header">
-  <div class="profile-avatar">
-  <img id="profilePhoto"
-       alt="Profile Photo"
-       style="display:none;width:75px;height:75px;border-radius:50%;object-fit:cover;">
-  <span id="defaultAvatar">👤</span>
-</div>
-
-<input type="file"
-       id="profilePhotoInput"
-       accept="image/*"
-       onchange="uploadProfilePhoto(event)">
-  <div>
-   <h2 id="profileName">CR~INDIA User</h2>
-   <p id="profileUsername">@crindia_user</p>
-  </div>
- </div>
-
- <p id="profileBio">Welcome to CR~INDIA 🇮🇳</p>
-
- <div class="profile-stats">
-  <div><strong id="postCount">0</strong><br>Posts</div>
-  <div><strong>0</strong><br>Followers</div>
-  <div><strong>0</strong><br>Following</div>
- </div>
-
- <button onclick="editProfile()">✏️ Edit Profile</button>
-</section>
-
-<section class="card">
-<h3>➕ Create a Post</h3>
-<textarea id="postText" placeholder="What's happening in India?"></textarea>
-<input type="file" id="postImage" accept="image/*">
-<button class="share" onclick="createPost()">Share Post</button>
-</section>
-
-<section class="card">
-<h3>🌟 Stories</h3>
-<p>🟠 Your Story　 🔵 Friends　 🟢 Explore</p>
-</section>
-
-<h3>🏠 Home Feed</h3>
-
-<div id="feed">
-<article class="card post">
-<strong>CR~INDIA 🇮🇳</strong>
-<p>Welcome to our Indian social community!</p>
-<p class="small">A place to connect with people.</p>
-<div class="post-actions">
-<button onclick="likePost(this)">♡ Like <span>0</span></button>
-<button onclick="commentPost(this)">💬 Comment</button>
-<button onclick="sharePost()">↗️ Share</button>
-</div>
-</article>
-</div>
-
-</main>
-
-<nav>
-<button onclick="window.scrollTo(0,0)">🏠 Home</button>
-<button onclick="document.getElementById('postText').focus()">➕ Create</button>
-<button onclick="alert('Explore coming soon!')">🔍 Explore</button>
-<button onclick="alert('Chat coming soon!')">💬 Chat</button>
-<button onclick="window.scrollTo(0,0)">👤 Profile</button>
-</nav>
-
-<script>
-
-function editProfile(){function function uploadProfilePhoto(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    alert("Please select an image.");
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    const imageData = e.target.result;
-
-    localStorage.setItem("crProfilePhoto", imageData);
-
-    showProfilePhoto(imageData);
-  };
-
-  reader.readAsDataURL(file);
-}
-
-function showProfilePhoto(imageData) {
-  const photo = document.getElementById("profilePhoto");
-
-  photo.src = imageData;
-  photo.style.display = "block";
-
-  document.getElementById("defaultAvatar").style.display = "none";
-}
-
-window.addEventListener("DOMContentLoaded", function() {
-  const savedPhoto = localStorage.getItem("crProfilePhoto");
-
-  if (savedPhoto) {
-    showProfilePhoto(savedPhoto);
-  }
-});
-  const reader = new FileReader();
-
-  reader.onload = function(e) {
-    const photo = document.getElementById("profilePhoto");
-    photo.src = e.target.result;
-    photo.style.display = "block";
-
-    document.getElementById("defaultAvatar").style.display = "none";
-  };
-
-  reader.readAsDataURL(file);
-}
- const name=prompt("Enter your name:");
+function editProfile(){
+ const name = prompt("Enter your name:");
  if(!name || !name.trim()) return;
 
- const username=prompt("Enter your username:");
- const bio=prompt("Enter your bio:");
+ const username = prompt("Enter your username:");
+ const bio = prompt("Enter your bio:");
 
- document.getElementById("profileName").textContent=name.trim();
+ document.getElementById("profileName").textContent = name.trim();
 
  if(username && username.trim()){
-  document.getElementById("profileUsername").textContent="@"+username.trim().replace(/^@/,"");
+  document.getElementById("profileUsername").textContent =
+   "@" + username.trim().replace(/^@/,"");
  }
 
- if(bio!==null){
-  document.getElementById("profileBio").textContent=bio;
+ if(bio !== null){
+  document.getElementById("profileBio").textContent = bio;
  }
 }
 
+function uploadProfilePhoto(event){
+ const file = event.target.files[0];
+ if(!file) return;
+
+ if(!file.type.startsWith("image/")){
+  alert("Please select an image.");
+  return;
+ }
+
+ if(file.size > 2 * 1024 * 1024){
+  alert("Please select an image under 2 MB.");
+  return;
+ }
+
+ const reader = new FileReader();
+
+ reader.onload = function(e){
+  const imageData = e.target.result;
+
+  try{
+   localStorage.setItem("crProfilePhoto", imageData);
+   showProfilePhoto(imageData);
+  }catch(error){
+   alert("Storage full. Please choose a smaller image.");
+  }
+ };
+
+ reader.readAsDataURL(file);
+}
+
+function showProfilePhoto(imageData){
+ const photo = document.getElementById("profilePhoto");
+ photo.src = imageData;
+ photo.style.display = "block";
+ document.getElementById("defaultAvatar").style.display = "none";
+}
+
+function loadProfilePhoto(){
+ const savedPhoto = localStorage.getItem("crProfilePhoto");
+ if(savedPhoto){
+  showProfilePhoto(savedPhoto);
+ }
+}
+
+window.addEventListener("DOMContentLoaded", loadProfilePhoto);
+
 function createPost(){
- const text=document.getElementById("postText").value.trim();
- const file=document.getElementById("postImage").files[0];
+ const text = document.getElementById("postText").value.trim();
+ const file = document.getElementById("postImage").files[0];
 
  if(!text && !file){
   alert("Please write something or choose a photo.");
   return;
  }
 
- const post=document.createElement("article");
- post.className="card post";
+ const post = document.createElement("article");
+ post.className = "card post";
 
- const heading=document.createElement("strong");
- heading.textContent=document.getElementById("profileName").textContent+" 🇮🇳";
+ const heading = document.createElement("strong");
+ heading.textContent = document.getElementById("profileName").textContent + " 🇮🇳";
  post.appendChild(heading);
 
  if(text){
-  const paragraph=document.createElement("p");
-  paragraph.textContent=text;
+  const paragraph = document.createElement("p");
+  paragraph.textContent = text;
   post.appendChild(paragraph);
  }
 
  if(file){
-  const image=document.createElement("img");
-  image.src=URL.createObjectURL(file);
-  image.alt="Post image";
+  const image = document.createElement("img");
+  image.src = URL.createObjectURL(file);
+  image.alt = "Your post image";
   post.appendChild(image);
  }
 
- const actions=document.createElement("div");
- actions.className="post-actions";
+ const actions = document.createElement("div");
+ actions.className = "post-actions";
 
- const like=document.createElement("button");
- like.innerHTML="♡ Like <span>0</span>";
- like.onclick=function(){likePost(like)};
+ const like = document.createElement("button");
+ like.innerHTML = '♡ Like <span>0</span>';
+ like.onclick = function(){likePost(like)};
 
- const comment=document.createElement("button");
- comment.textContent="💬 Comment";
- comment.onclick=function(){commentPost(comment)};
+ const comment = document.createElement("button");
+ comment.textContent = "💬 Comment";
+ comment.onclick = function(){commentPost(comment)};
 
- const share=document.createElement("button");
- share.textContent="↗️ Share";
- share.onclick=sharePost;
+ const share = document.createElement("button");
+ share.textContent = "↗️ Share";
+ share.onclick = sharePost;
 
- actions.append(like,comment,share);
+ actions.append(like, comment, share);
  post.appendChild(actions);
 
  document.getElementById("feed").prepend(post);
 
- document.getElementById("postText").value="";
- document.getElementById("postImage").value="";
+ document.getElementById("postText").value = "";
+ document.getElementById("postImage").value = "";
 
- document.getElementById("postCount").textContent=
- Number(document.getElementById("postCount").textContent)+1;
+ const count = document.getElementById("postCount");
+ count.textContent = Number(count.textContent) + 1;
 }
 
 function likePost(button){
- const count=button.querySelector("span");
- const liked=button.classList.toggle("liked");
+ const count = button.querySelector("span");
+ const liked = button.classList.toggle("liked");
 
- count.textContent=Number(count.textContent)+(liked?1:-1);
- button.firstChild.textContent=liked?"♥ Liked ":"♡ Like ";
+ count.textContent = Number(count.textContent) + (liked ? 1 : -1);
+ button.firstChild.textContent = liked ? "♥ Liked " : "♡ Like ";
 }
 
 function commentPost(button){
- const comment=prompt("Write your comment:");
+ const comment = prompt("Write your comment:");
  if(!comment || !comment.trim()) return;
 
- const post=button.closest(".post");
- let comments=post.querySelector(".comments-list");
+ const post = button.closest(".post");
+ let comments = post.querySelector(".comments-list");
 
  if(!comments){
-  comments=document.createElement("div");
-  comments.className="comments-list";
+  comments = document.createElement("div");
+  comments.className = "comments-list";
   post.appendChild(comments);
  }
 
- const item=document.createElement("p");
- item.textContent="💬 "+comment.trim();
+ const item = document.createElement("p");
+ item.textContent = "💬 " + comment.trim();
  comments.appendChild(item);
 }
 
@@ -369,8 +160,3 @@ function sharePost(){
   prompt("Copy CR~INDIA link:",window.location.href);
  }
 }
-
-</script>
-
-</body>
-</html>

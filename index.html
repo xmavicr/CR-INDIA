@@ -138,6 +138,22 @@ small{color:#aaa}
 <div id="feed"></div>
 
 </main>
+  <section class="card" id="authSection">
+  <h2>🇮🇳 Welcome to CR~INDIA</h2>
+  <h3>Create Your Account / Login</h3>
+
+  <input type="text" id="authName" placeholder="Your Name">
+
+  <input type="email" id="authEmail" placeholder="Email Address">
+
+  <input type="password" id="authPassword" placeholder="Password">
+
+  <button id="signupBtn">Create Account</button>
+
+  <button id="loginBtn">Login</button>
+
+  <p id="authMessage"></p>
+  </section>
 
 <nav>
   <button onclick="window.scrollTo(0,0)">🏠 Home</button>
@@ -348,6 +364,13 @@ showPosts();
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
   
 alert("MODULE SCRIPT STARTED!");
 const firebaseConfig = {
@@ -360,7 +383,59 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 const db = getFirestore(app);
+  const authName = document.getElementById("authName");
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
+const authMessage = document.getElementById("authMessage");
+
+document.getElementById("signupBtn").addEventListener("click", async () => {
+  const name = authName.value.trim();
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if (!name || !email || !password) {
+    authMessage.textContent = "Please fill all fields.";
+    return;
+  }
+
+  if (password.length < 6) {
+    authMessage.textContent = "Password must be at least 6 characters.";
+    return;
+  }
+
+  try {
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credential.user, { displayName: name });
+    authMessage.textContent = "Account created successfully!";
+  } catch (error) {
+    authMessage.textContent = error.message;
+  }
+});
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  const email = authEmail.value.trim();
+  const password = authPassword.value;
+
+  if (!email || !password) {
+    authMessage.textContent = "Enter email and password.";
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    authMessage.textContent = "Login successful!";
+  } catch (error) {
+    authMessage.textContent = error.message;
+  }
+});
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    authMessage.textContent = "Welcome, " + (user.displayName || user.email);
+  }
+});
 
 console.log("CR~INDIA Firebase Connected!");
 console.log("CR~INDIA Firestore Ready!");

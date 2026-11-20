@@ -342,8 +342,9 @@ function showPosts(){
 loadProfile();
 showPosts();
 </script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+<<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
 import {
   getFirestore,
@@ -351,7 +352,9 @@ import {
   addDoc,
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-  const firebaseConfig = {// Import the functions you need from the SDKs you need
+
+// Firebase Configuration
+const firebaseConfig = {// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -366,13 +369,12 @@ const firebaseConfig = {
   appId: "1:366308189366:web:b2f0529345e829d051b217"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 console.log("CR~INDIA Firebase Connected!");
 console.log("CR~INDIA Firestore Ready!");
+
 alert("CR~INDIA Firebase Connected!");
+
 </script>
-</body>
-</html>

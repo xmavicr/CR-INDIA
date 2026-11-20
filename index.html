@@ -344,16 +344,20 @@ showPosts();
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
 import {
   getFirestore,
   collection,
   addDoc,
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-  const app = initializeApp(firebaseConfig);
-  const db =getFirestore(app)
-  console.log("CR~INDIA Firestore Ready!")
-  const firebaseConfig = const firebaseConfig = {
+  const firebaseConfig = {// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
   apiKey: "AIzaSyC65KhwSLX0DZ0q30rBPZQNuqefzxEYuSw",
   authDomain: "cr-india-f00c3.firebaseapp.com",
   projectId: "cr-india-f00c3",
@@ -362,9 +366,12 @@ import {
   appId: "1:366308189366:web:b2f0529345e829d051b217"
 };
 
-  const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  console.log("CR~INDIA Firebase Connected!");
+console.log("CR~INDIA Firebase Connected!");
+console.log("CR~INDIA Firestore Ready!");
 </script>
 </body>
 </html>
